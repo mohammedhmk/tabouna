@@ -1,0 +1,26 @@
+{
+  "hero": {
+    "placeholder": "#a88d60",
+    "totalKB": 272
+  },
+  "pizza-pepperoni": {
+    "placeholder": "#a58a5b",
+    "totalKB": 187
+  },
+  "fatayer-cheddar": {
+    "placeholder": "#ab9662",
+    "totalKB": 110
+  },
+  "fatayer-tomato": {
+    "placeholder": "#9c8b66",
+    "totalKB": 108
+  },
+  "pizza-classic": {
+    "placeholder": "#ac8854",
+    "totalKB": 187
+  },
+  "pizza-4cheese": {
+    "placeholder": "#ac925a",
+    "totalKB": 145
+  }
+}

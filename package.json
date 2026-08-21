@@ -1,0 +1,17 @@
+{
+  "name": "tabouna-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "صفحة هبوط مطعم طابونة — فطائر وبيتزا، الرياض",
+  "type": "module",
+  "scripts": {
+    "images": "node scripts/optimize-images.mjs",
+    "serve": "npx --yes serve . -l 5173"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.2"
+  },
+  "allowScripts": {
+    "sharp@0.34.5": true
+  }
+}
