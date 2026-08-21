@@ -58,13 +58,23 @@ export const BUSINESS = {
   },
 };
 
+// إطار عرض الخريطة المُضمّنة حول موقع المطعم (بدون مفتاح API)
+const MAP_SPAN_LAT = 0.006;
+const MAP_SPAN_LNG = 0.008;
+
 /** روابط الإجراءات الجاهزة (مبنية من BUSINESS، لا تحتاج تعديل عادةً) */
 export const LINKS = {
   tel: `tel:${BUSINESS.phoneIntl}`,
   whatsapp: `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(BUSINESS.whatsappMessage)}`,
-  // بطاقة الموقع بالصفحة رابط مباشر لخرائط قوقل (وليست خريطة مُضمّنة) — بضغطة
-  // وحدة تاخذ الزائر لتطبيق الخرائط مباشرة، وهذا أنسب لحملة تستهدف زيارة المحل.
   directions: `https://www.google.com/maps/dir/?api=1&destination=${BUSINESS.geo.lat},${BUSINESS.geo.lng}`,
+  // خريطة حقيقية مُضمّنة (OpenStreetMap، مجانية وبدون مفتاح API — خرائط قوقل
+  // توقفت عن دعم التضمين المجاني). تظهر مباشرة بالصفحة، وفوقها طبقة شفافة
+  // تفتح خرائط قوقل عند الضغط (احترافية + تحويل مباشر بنفس الوقت).
+  mapEmbed: `https://www.openstreetmap.org/export/embed.html?bbox=${
+    BUSINESS.geo.lng - MAP_SPAN_LNG
+  },${BUSINESS.geo.lat - MAP_SPAN_LAT},${BUSINESS.geo.lng + MAP_SPAN_LNG},${
+    BUSINESS.geo.lat + MAP_SPAN_LAT
+  }&layer=mapnik&marker=${BUSINESS.geo.lat},${BUSINESS.geo.lng}`,
 };
 
 /** أصناف المنيو المعروضة (بدون أسعار بطلب صاحب المطعم) */

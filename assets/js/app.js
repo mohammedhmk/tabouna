@@ -11,6 +11,9 @@ function syncActionLinks() {
     const href = map[el.dataset.sync];
     if (href) el.setAttribute("href", href);
   });
+
+  const mapFrame = document.querySelector("[data-map-embed]");
+  if (mapFrame) mapFrame.src = LINKS.mapEmbed;
 }
 
 /* ---------- 2. ظهور تدريجي عند التمرير ---------- */

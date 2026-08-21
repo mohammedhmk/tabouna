@@ -465,25 +465,31 @@
             </a>
           </div>
 
-          <a
-            href="https://www.google.com/maps/dir/?api=1&destination=24.804553,46.641033"
-            data-sync="directions"
-            data-track="directions"
-            target="_blank"
-            rel="noopener"
-            class="map-card glass"
-            data-reveal
-          >
-            <div class="map-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.4 7-11.5A7 7 0 0 0 5 9.5C5 14.6 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-            </div>
-            <h3>الموقع على الخريطة</h3>
-            <p>حي الصحافة، الرياض</p>
-            <span class="map-card__hint">
-              افتح في خرائط قوقل
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
-            </span>
-          </a>
+          <div class="map-embed glass" data-reveal>
+            <iframe
+              data-map-embed
+              src=""
+              loading="lazy"
+              title="موقع مطعم طابونة على الخريطة"
+              referrerpolicy="no-referrer-when-downgrade"
+              aria-hidden="true"
+              tabindex="-1"
+            ></iframe>
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=24.804553,46.641033"
+              data-sync="directions"
+              data-track="directions"
+              target="_blank"
+              rel="noopener"
+              class="map-embed__overlay"
+              aria-label="افتح الاتجاهات لموقع طابونة في خرائط قوقل"
+            >
+              <span class="map-embed__hint">
+                افتح الاتجاهات
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
+              </span>
+            </a>
+          </div>
         </div>
       </section>
 
