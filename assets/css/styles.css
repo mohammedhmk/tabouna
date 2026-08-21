@@ -1012,6 +1012,13 @@ h3 {
   transform: translateY(0);
 }
 
+/* عناصر الـ Hero فوق خط الطي — fade فقط بدون translateY لأن الحركة العمودية
+   تسبب سكرول تلقائي مع scroll-behavior:smooth عند بعض المتصفحات */
+.hero [data-reveal] {
+  transform: none;
+  transition: opacity 0.8s var(--ease);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
