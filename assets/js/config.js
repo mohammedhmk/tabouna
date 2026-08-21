@@ -15,7 +15,7 @@
  * الشكل: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
  * اتركه فارغاً "" لتعطيل التتبّع بالكامل بدون أي خطأ في الصفحة.
  */
-export const SNAP_PIXEL_ID = "";
+export const SNAP_PIXEL_ID = "0c39a4d9-134a-49a5-87f2-c7866a60a30b";
 
 /** بيانات المطعم — تُستخدم في كل الصفحة (الاتصال، الخريطة، الفوتر، بيانات SEO) */
 export const BUSINESS = {
