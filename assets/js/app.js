@@ -78,10 +78,22 @@ function initReviewsCarousel() {
 
   function scrollToIndex(i) {
     current = Math.max(0, Math.min(i, cards.length - 1));
-    cards[current].scrollIntoView({
+    // نستخدم scrollTo على الـ track مباشرة بدل scrollIntoView —
+    // scrollIntoView يحرّك الصفحة كلها عمودياً لما الكاروسيل يكون جزئياً خارج الشاشة،
+    // وهذا يسبب سكرول تلقائي مزعج بدون تدخل المستخدم.
+    const card = cards[current];
+    const trackDir = getComputedStyle(track).direction;
+    const isRtl = trackDir === "rtl";
+    // حساب موضع البطاقة نسبةً للـ track
+    const cardRect = card.getBoundingClientRect();
+    const trackRect = track.getBoundingClientRect();
+    // المسافة الأفقية بين بداية البطاقة وبداية الـ track (نسبة للاتجاه الحالي)
+    const offset = isRtl
+      ? trackRect.right - cardRect.right + track.scrollLeft
+      : cardRect.left - trackRect.left + track.scrollLeft;
+    track.scrollTo({
+      left: offset,
       behavior: reduced ? "auto" : "smooth",
-      inline: "start",
-      block: "nearest",
     });
     updateDots();
   }
