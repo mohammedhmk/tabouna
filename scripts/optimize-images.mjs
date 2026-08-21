@@ -12,14 +12,14 @@ const OUT = path.join(ROOT, "assets/img");
 
 const BRAND_DARK = { r: 0x14, g: 0x21, b: 0x1a }; // #14211A
 
-/** الصور التسويقية: اسم الملف الناتج + عروض متجاوبة + جودة */
+/**
+ * الصور التسويقية: اسم الملف الناتج + عروض متجاوبة + جودة.
+ * ملاحظة: بطاقات المنيو حالياً بدون صور (بطلب صاحب المطعم — الصور المرفقة
+ * كانت للموقع عموماً، مو تمثيلاً دقيقاً لكل صنف). لو صارت عندك صور حقيقية
+ * للأصناف، ضيفها في src/originals/ وأضف سطراً هنا بنفس النمط، ثم npm run images.
+ */
 const PHOTOS = [
   { file: "hero-box.png", out: "hero", widths: [640, 960, 1122], quality: 70 }, // 1122 = العرض الأصلي (لا تكبير وهمي)
-  { file: "pizza-pepperoni.png", out: "pizza-pepperoni", widths: [400, 640, 960], quality: 72 },
-  { file: "fatayer-cheddar.png", out: "fatayer-cheddar", widths: [400, 640, 960], quality: 72 },
-  { file: "fatayer-tomato.png", out: "fatayer-tomato", widths: [400, 640, 960], quality: 72 },
-  { file: "pizza-classic.png", out: "pizza-classic", widths: [400, 640, 960], quality: 72 },
-  { file: "pizza-4cheese.png", out: "pizza-4cheese", widths: [400, 640, 960], quality: 72 },
 ];
 
 async function ensureDir(dir) {

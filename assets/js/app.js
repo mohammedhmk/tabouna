@@ -1,5 +1,5 @@
 // طابونة — منطق الصفحة: روابط ديناميكية، ظهور تدريجي، كاروسيل المراجعات،
-// خريطة كسولة التحميل، وتتبّع بيكسل سناب شات.
+// وتتبّع بيكسل سناب شات.
 import { SNAP_PIXEL_ID, LINKS } from "./config.js";
 
 /* ---------- 1. مزامنة روابط الاتصال/واتساب/الاتجاهات من config.js ---------- */
@@ -126,47 +126,7 @@ function initReviewsCarousel() {
   startAuto();
 }
 
-/* ---------- 4. الخريطة: تحميل كسول عند الوصول أو عند النقر ---------- */
-function initLazyMap() {
-  const frame = document.querySelector("[data-map-frame]");
-  if (!frame) return;
-  const placeholder = frame.querySelector("[data-map-placeholder]");
-  const src = LINKS.mapEmbed; // مصدرها الوحيد config.js — راجع BUSINESS.geo هناك
-  let loaded = false;
-
-  function load() {
-    if (loaded) return;
-    loaded = true;
-    const iframe = document.createElement("iframe");
-    iframe.src = src;
-    iframe.loading = "lazy";
-    iframe.title = "موقع مطعم طابونة على خرائط قوقل";
-    iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
-    frame.appendChild(iframe);
-    placeholder?.remove();
-    trackMapFirstView();
-  }
-
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            load();
-            io.disconnect();
-          }
-        });
-      },
-      { rootMargin: "200px" }
-    );
-    io.observe(frame);
-  }
-  placeholder?.addEventListener("click", load);
-}
-
-/* ---------- 5. بيكسل سناب شات ---------- */
-let mapViewTracked = false;
-
+/* ---------- 4. بيكسل سناب شات ---------- */
 function loadSnapPixel() {
   if (!SNAP_PIXEL_ID) return;
 
@@ -196,12 +156,6 @@ function snap(event, custom) {
   if (custom) window.snaptr("track", custom);
 }
 
-function trackMapFirstView() {
-  if (mapViewTracked) return;
-  mapViewTracked = true;
-  snap("VIEW_CONTENT", "CUSTOM_EVENT_3");
-}
-
 function initPixelTracking() {
   document.addEventListener("click", (e) => {
     const el = e.target.closest("[data-track]");
@@ -218,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
   syncActionLinks();
   initReveal();
   initReviewsCarousel();
-  initLazyMap();
   initPixelTracking();
 
   const year = document.querySelector("[data-year]");

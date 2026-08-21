@@ -58,23 +58,13 @@ export const BUSINESS = {
   },
 };
 
-// إطار عرض الخريطة المُضمّنة حول موقع المطعم (بدون مفتاح API)
-const MAP_SPAN_LAT = 0.006;
-const MAP_SPAN_LNG = 0.008;
-
 /** روابط الإجراءات الجاهزة (مبنية من BUSINESS، لا تحتاج تعديل عادةً) */
 export const LINKS = {
   tel: `tel:${BUSINESS.phoneIntl}`,
   whatsapp: `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(BUSINESS.whatsappMessage)}`,
+  // بطاقة الموقع بالصفحة رابط مباشر لخرائط قوقل (وليست خريطة مُضمّنة) — بضغطة
+  // وحدة تاخذ الزائر لتطبيق الخرائط مباشرة، وهذا أنسب لحملة تستهدف زيارة المحل.
   directions: `https://www.google.com/maps/dir/?api=1&destination=${BUSINESS.geo.lat},${BUSINESS.geo.lng}`,
-  // ملاحظة: خرائط قوقل توقفت عن دعم التضمين المجاني بدون مفتاح API (تُرجع 404 أو تُمنع
-  // بـ X-Frame-Options). نستخدم OpenStreetMap للتضمين المباشر — مجاني تماماً وبدون إعداد.
-  // زر "خذني للمطعم" يبقى يفتح خرائط قوقل الحقيقية لأنه رابط تنقّل لا تضمين.
-  mapEmbed: `https://www.openstreetmap.org/export/embed.html?bbox=${
-    BUSINESS.geo.lng - MAP_SPAN_LNG
-  },${BUSINESS.geo.lat - MAP_SPAN_LAT},${BUSINESS.geo.lng + MAP_SPAN_LNG},${
-    BUSINESS.geo.lat + MAP_SPAN_LAT
-  }&layer=mapnik&marker=${BUSINESS.geo.lat},${BUSINESS.geo.lng}`,
 };
 
 /** أصناف المنيو المعروضة (بدون أسعار بطلب صاحب المطعم) */

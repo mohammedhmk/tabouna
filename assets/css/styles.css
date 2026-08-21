@@ -376,6 +376,15 @@ h3 {
   min-height: 40px;
   font-size: var(--fs-small);
 }
+.btn--lg {
+  padding: 20px 40px;
+  min-height: 66px;
+  font-size: 1.2rem;
+}
+.btn--lg svg {
+  width: 24px;
+  height: 24px;
+}
 
 /* ---------- 6. Hero ---------- */
 .hero {
@@ -555,31 +564,30 @@ h3 {
   gap: 24px;
 }
 .menu-card {
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding: 26px 24px;
   transition: transform var(--dur-m) var(--ease), box-shadow var(--dur-m) var(--ease);
 }
 .menu-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lift);
 }
-.menu-card__media {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  position: relative;
+.menu-card__icon {
+  width: 52px;
+  height: 52px;
+  margin-block-end: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(155deg, rgba(200, 162, 74, 0.25), rgba(200, 162, 74, 0.05));
+  color: var(--gold-soft);
 }
-.menu-card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s var(--ease);
-}
-.menu-card:hover .menu-card__media img {
-  transform: scale(1.06);
+.menu-card__icon svg {
+  width: 26px;
+  height: 26px;
 }
 .menu-card__body {
-  padding: 20px 22px 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -795,38 +803,80 @@ h3 {
   color: var(--text-mid);
   font-size: var(--fs-small);
 }
-.map-frame {
+/* بطاقة موقع قابلة للضغط بالكامل — تفتح خرائط قوقل مباشرة بضغطة وحدة،
+   بدل خريطة مُضمّنة تشتّت الزائر داخل الصفحة (الهدف: تحويل مباشر للزيارة) */
+.map-card {
   position: relative;
-  overflow: hidden;
   min-height: 340px;
-}
-.map-frame__placeholder {
-  position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  background: linear-gradient(155deg, #1a2a20, #0f1a13);
-  color: var(--text-mid);
+  text-align: center;
+  gap: 6px;
+  padding: 32px;
+  overflow: hidden;
   cursor: pointer;
-  transition: background var(--dur-s) var(--ease);
+  transition: transform var(--dur-m) var(--ease), box-shadow var(--dur-m) var(--ease);
 }
-.map-frame__placeholder:hover {
-  background: linear-gradient(155deg, #1f3226, #121e17);
+.map-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
 }
-.map-frame__placeholder svg {
-  width: 34px;
-  height: 34px;
-  color: var(--gold);
-}
-.map-frame iframe {
+.map-card::after {
+  content: "";
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
+  z-index: -1;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(70% 70% at 50% 40%, #000, transparent);
+  mask-image: radial-gradient(70% 70% at 50% 40%, #000, transparent);
+}
+.map-card__icon {
+  width: 72px;
+  height: 72px;
+  margin-block-end: 6px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(155deg, rgba(200, 162, 74, 0.28), rgba(200, 162, 74, 0.06));
+  color: var(--gold);
+}
+.map-card__icon svg {
+  width: 34px;
+  height: 34px;
+}
+.map-card h3 {
+  font-size: var(--fs-h3);
+}
+.map-card p {
+  color: var(--text-mid);
+  font-size: var(--fs-small);
+}
+.map-card__hint {
+  margin-block-start: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-brd);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  color: var(--gold-soft);
+  transition: background var(--dur-s) var(--ease), gap var(--dur-s) var(--ease);
+}
+.map-card__hint svg {
+  width: 16px;
+  height: 16px;
+}
+.map-card:hover .map-card__hint {
+  background: rgba(255, 255, 255, 0.15);
+  gap: 12px;
 }
 
 /* ---------- 13. CTA نهائي ---------- */
