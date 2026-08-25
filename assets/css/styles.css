@@ -1048,129 +1048,99 @@ h3 {
   }
 }
 
-/* ---------- 18. بانر إعلان الدوام الجديد ---------- */
-.announcement-bar {
+/* ---------- 18. شريط عاجل (News Ticker) ---------- */
+.ticker {
   position: relative;
   z-index: 50;
-  background: linear-gradient(95deg, #b8941f 0%, #d4af37 25%, #e8c547 50%, #d4af37 75%, #b8941f 100%);
-  background-size: 200% 100%;
-  animation: announcement-shimmer 4s ease-in-out infinite;
-  color: #1c1204;
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(95deg, #1a1a1a 0%, #111 100%);
+  border-bottom: 2px solid var(--gold);
   overflow: hidden;
 }
-.announcement-bar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
-  background-size: 200% 100%;
-  animation: announcement-shine 3s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes announcement-shimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-@keyframes announcement-shine {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.announcement-bar__inner {
-  position: relative;
+.ticker__label {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding-block: 12px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: #fff;
   font-family: var(--font-head);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-.announcement-bar__inner p {
-  color: #1c1204;
-  margin: 0;
-}
-.announcement-bar__inner strong {
   font-weight: 900;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
-.announcement-bar__badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
-  background: #1c1204;
-  color: var(--gold-soft);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-.announcement-bar__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  border-radius: var(--radius-pill);
-  background: #1c1204;
-  color: var(--gold-soft);
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background var(--dur-s) var(--ease), transform var(--dur-s) var(--ease);
+  position: relative;
+  z-index: 2;
+  box-shadow: 4px 0 12px rgba(0,0,0,0.4);
+  animation: ticker-label-pulse 2s ease-in-out infinite;
 }
-.announcement-bar__cta svg {
-  width: 14px;
-  height: 14px;
+@keyframes ticker-label-pulse {
+  0%, 100% { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+  50% { background: linear-gradient(135deg, #e74c3c, #ff6b6b); }
 }
-.announcement-bar__cta:hover {
-  background: #2a1e08;
-  transform: scale(1.05);
+.ticker__track {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
-.announcement-bar__close {
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.1);
-  color: #1c1204;
-  font-size: 0.75rem;
-  font-weight: 700;
+.ticker__content {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker-scroll 25s linear infinite;
+}
+.ticker__content span {
+  display: inline-block;
+  padding: 10px 0;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--gold-soft);
+  letter-spacing: 0.01em;
+}
+/* الحركة: من اليمين لليسار (RTL) */
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+.ticker__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
   border: none;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-mid);
+  font-size: 0.8rem;
   cursor: pointer;
-  transition: background var(--dur-s) var(--ease);
+  transition: background var(--dur-s) var(--ease), color var(--dur-s) var(--ease);
 }
-.announcement-bar__close:hover {
-  background: rgba(0,0,0,0.2);
+.ticker__close:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--text-high);
 }
 
 /* حالة الإخفاء */
-.announcement-bar.is-hidden {
+.ticker.is-hidden {
   display: none;
 }
 
 @media (max-width: 600px) {
-  .announcement-bar__inner {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding-block: 10px;
-    padding-inline-end: 36px;
-    font-size: 0.82rem;
-    justify-content: flex-start;
+  .ticker__label {
+    padding: 8px 14px;
+    font-size: 0.8rem;
   }
-  .announcement-bar__cta {
-    padding: 5px 12px;
-    font-size: 0.75rem;
+  .ticker__content span {
+    font-size: 0.9rem;
+    padding: 8px 0;
   }
 }
 

@@ -225,12 +225,16 @@ function initFloatingCTA() {
 
 /* ---------- التشغيل ---------- */
 
-// نعطّل scroll-behavior: smooth مؤقتاً أثناء التحميل عشان
-// ما يتسرّب سكرول الكاروسيل للصفحة الرئيسية
+// === إصلاح بق السكرول التلقائي ===
+// المتصفح يحفظ موضع السكرول ويرجعه عند الريفرش (scroll restoration)
+// مما يسبب نزول الصفحة للتقييمات. نعطّله ونرجع الصفحة لفوق يدوياً.
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
 document.documentElement.style.scrollBehavior = "auto";
+window.scrollTo(0, 0);
 
 document.addEventListener("DOMContentLoaded", () => {
-  // نرجّع الصفحة لفوق بشكل فوري قبل أي شي
   window.scrollTo(0, 0);
 
   syncActionLinks();
@@ -245,11 +249,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("load", () => {
+  // نرجّع الصفحة لفوق مرة أخيرة بعد التحميل الكامل
+  window.scrollTo(0, 0);
+
   // نرجّع scroll-behavior: smooth بعد ما كل شي يستقر
   setTimeout(() => {
     document.documentElement.style.scrollBehavior = "";
-  }, 1000);
+  }, 1200);
 
   loadSnapPixel();
 });
-
