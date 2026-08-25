@@ -40,9 +40,9 @@ export const BUSINESS = {
   mapsShareUrl: "https://maps.app.goo.gl/osp3WfB9sjcUwEm1A",
 
   hours: {
-    opens: "12:00",
+    opens: "06:00",
     closes: "02:00",
-    display: "يومياً من ١٢ الظهر لين ٢ الفجر",
+    display: "يومياً من ٦ الصباح لين ٢ الفجر",
   },
 
   // القيمة 5.0 مبنية على 3 مراجعات حقيقية زوّدنا بها صاحب المطعم (كلها 5/5).

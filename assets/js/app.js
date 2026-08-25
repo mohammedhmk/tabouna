@@ -76,7 +76,7 @@ function initReviewsCarousel() {
     dots.forEach((d, i) => d.classList.toggle("is-active", i === current));
   }
 
-  function scrollToIndex(i) {
+  function scrollToIndex(i, instant) {
     current = Math.max(0, Math.min(i, cards.length - 1));
     // نستخدم scrollTo على الـ track مباشرة بدل scrollIntoView —
     // scrollIntoView يحرّك الصفحة كلها عمودياً لما الكاروسيل يكون جزئياً خارج الشاشة،
@@ -93,7 +93,7 @@ function initReviewsCarousel() {
       : cardRect.left - trackRect.left + track.scrollLeft;
     track.scrollTo({
       left: offset,
-      behavior: reduced ? "auto" : "smooth",
+      behavior: (reduced || instant) ? "auto" : "smooth",
     });
     updateDots();
   }
@@ -138,7 +138,12 @@ function initReviewsCarousel() {
   ["mouseleave", "touchend"].forEach((ev) => track.addEventListener(ev, startAuto, { passive: true }));
 
   updateDots();
-  startAuto();
+
+  // نؤجّل بدء التمرير التلقائي لما المتصفح يستقر — يمنع بق السكرول
+  // التلقائي الذي يسبب نزول الصفحة للتقييمات عند الفتح
+  requestAnimationFrame(() => {
+    setTimeout(startAuto, 500);
+  });
 }
 
 /* ---------- 4. بيكسل سناب شات ---------- */
@@ -182,12 +187,47 @@ function initPixelTracking() {
   });
 }
 
+/* ---------- 5. بانر الإعلان ---------- */
+function initAnnouncementBar() {
+  const bar = document.querySelector("[data-announcement]");
+  const closeBtn = document.querySelector("[data-announcement-close]");
+  if (!bar || !closeBtn) return;
+
+  // لو المستخدم سكّره قبل كذا في نفس الجلسة، ما نعرضه
+  if (sessionStorage.getItem("announcement-closed")) {
+    bar.classList.add("is-hidden");
+    return;
+  }
+
+  closeBtn.addEventListener("click", () => {
+    bar.classList.add("is-hidden");
+    sessionStorage.setItem("announcement-closed", "1");
+  });
+}
+
+/* ---------- 6. زر الاتصال العائم ---------- */
+function initFloatingCTA() {
+  const fab = document.getElementById("floating-cta");
+  const hero = document.querySelector(".hero");
+  if (!fab || !hero) return;
+
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      fab.classList.toggle("is-visible", !entry.isIntersecting);
+    },
+    { threshold: 0.05 }
+  );
+  io.observe(hero);
+}
+
 /* ---------- التشغيل ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   syncActionLinks();
   initReveal();
   initReviewsCarousel();
   initPixelTracking();
+  initAnnouncementBar();
+  initFloatingCTA();
 
   const year = document.querySelector("[data-year]");
   if (year) year.textContent = String(new Date().getFullYear());
@@ -195,3 +235,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // تحميل بيكسل سناب بعد اكتمال تحميل الصفحة كي لا يؤثر على سرعتها
 window.addEventListener("load", loadSnapPixel);
+

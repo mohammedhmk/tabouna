@@ -637,6 +637,7 @@ h3 {
 }
 .reviews__viewport {
   overflow: visible;
+  overflow-y: clip;
 }
 .reviews__track {
   display: flex;
@@ -1045,3 +1046,194 @@ h3 {
     justify-content: center;
   }
 }
+
+/* ---------- 18. بانر إعلان الدوام الجديد ---------- */
+.announcement-bar {
+  position: relative;
+  z-index: 50;
+  background: linear-gradient(95deg, #b8941f 0%, #d4af37 25%, #e8c547 50%, #d4af37 75%, #b8941f 100%);
+  background-size: 200% 100%;
+  animation: announcement-shimmer 4s ease-in-out infinite;
+  color: #1c1204;
+  overflow: hidden;
+}
+.announcement-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: announcement-shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes announcement-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes announcement-shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.announcement-bar__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-block: 12px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.announcement-bar__inner p {
+  color: #1c1204;
+  margin: 0;
+}
+.announcement-bar__inner strong {
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.announcement-bar__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: #1c1204;
+  color: var(--gold-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.announcement-bar__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  background: #1c1204;
+  color: var(--gold-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background var(--dur-s) var(--ease), transform var(--dur-s) var(--ease);
+}
+.announcement-bar__cta svg {
+  width: 14px;
+  height: 14px;
+}
+.announcement-bar__cta:hover {
+  background: #2a1e08;
+  transform: scale(1.05);
+}
+.announcement-bar__close {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+  color: #1c1204;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background var(--dur-s) var(--ease);
+}
+.announcement-bar__close:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+/* حالة الإخفاء */
+.announcement-bar.is-hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .announcement-bar__inner {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-block: 10px;
+    padding-inline-end: 36px;
+    font-size: 0.82rem;
+    justify-content: flex-start;
+  }
+  .announcement-bar__cta {
+    padding: 5px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ---------- 19. زر اتصال عائم (ديسكتوب) ---------- */
+.floating-cta {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 55;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.floating-cta.is-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.floating-cta__pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: rgba(200, 162, 74, 0.35);
+  animation: floating-pulse 2s ease-in-out infinite;
+}
+@keyframes floating-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+.floating-cta__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--gold-soft), var(--gold));
+  color: var(--on-gold);
+  box-shadow: 0 8px 28px rgba(200, 162, 74, 0.5);
+  transition: transform var(--dur-s) var(--ease), box-shadow var(--dur-s) var(--ease);
+}
+.floating-cta__btn svg {
+  width: 26px;
+  height: 26px;
+}
+.floating-cta__btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 12px 36px rgba(200, 162, 74, 0.65);
+}
+.floating-cta__btn:active {
+  transform: scale(0.95);
+}
+
+/* الجوال: الشريط السفلي موجود فما نحتاج الزر العائم */
+@media (max-width: 860px) {
+  .floating-cta {
+    display: none;
+  }
+}
+
