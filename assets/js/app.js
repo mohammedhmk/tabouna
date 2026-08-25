@@ -234,6 +234,21 @@ if ("scrollRestoration" in history) {
 document.documentElement.style.scrollBehavior = "auto";
 window.scrollTo(0, 0);
 
+// تثبيت إضافي: أي إزاحة سكرول تحصل خلال أول ثانية من التحميل (بسبب تبديل
+// الخط، فك ترميز الصور، أو أي إعادة حساب تخطيط متأخرة) تُرجَع فوراً لفوق
+// طول ما المستخدم ما لمس الصفحة بنفسه.
+let userScrolled = false;
+["wheel", "touchstart", "keydown"].forEach((ev) =>
+  window.addEventListener(ev, () => { userScrolled = true; }, { passive: true, once: true })
+);
+const pinStart = Date.now();
+function pinScrollTop() {
+  if (userScrolled) return;
+  if (window.scrollY > 0) window.scrollTo(0, 0);
+  if (Date.now() - pinStart < 1000) requestAnimationFrame(pinScrollTop);
+}
+requestAnimationFrame(pinScrollTop);
+
 document.addEventListener("DOMContentLoaded", () => {
   window.scrollTo(0, 0);
 

@@ -112,6 +112,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
+  overflow-anchor: none;
 }
 body,
 h1,
@@ -1004,21 +1005,16 @@ h3 {
 }
 
 /* ---------- 16. ظهور تدريجي عند التمرير ---------- */
+/* fade فقط بدون translateY — أي حركة عمودية على عناصر تُكشف بالـ
+   IntersectionObserver تسبب، في بعض المتصفحات مع scroll-behavior:smooth،
+   سكرول تلقائي متتابع (كل عنصر يظهر يزيح السكرول قليلاً فيكشف العنصر اللي
+   بعده فيتكرر الأمر) يوصل بالصفحة لين قسم التقييمات لحاله. */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition: opacity 0.7s var(--ease);
 }
 [data-reveal].is-visible {
   opacity: 1;
-  transform: translateY(0);
-}
-
-/* عناصر الـ Hero فوق خط الطي — fade فقط بدون translateY لأن الحركة العمودية
-   تسبب سكرول تلقائي مع scroll-behavior:smooth عند بعض المتصفحات */
-.hero [data-reveal] {
-  transform: none;
-  transition: opacity 0.8s var(--ease);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1100,13 +1096,13 @@ h3 {
   color: var(--gold-soft);
   letter-spacing: 0.01em;
 }
-/* الحركة: من اليمين لليسار (RTL) */
+/* الحركة: من اليمين لليسار — النص يخرج من تحت شارة "عاجل" ويتحرك مبتعداً عنها */
 @keyframes ticker-scroll {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(50%);
+    transform: translateX(-50%);
   }
 }
 .ticker__close {
