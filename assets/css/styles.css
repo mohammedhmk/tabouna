@@ -644,6 +644,7 @@ h3 {
   gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
   padding-block: 6px 10px;
   padding-inline: 2px;
   scrollbar-width: none;
@@ -1084,7 +1085,7 @@ h3 {
   padding-block: 12px;
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
 }
 .announcement-bar__inner p {
   color: #1c1204;

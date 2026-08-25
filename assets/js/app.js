@@ -54,6 +54,13 @@ function initReviewsCarousel() {
   const track = document.querySelector("[data-reviews-track]");
   if (!track) return;
 
+  // === إصلاح بق السكرول التلقائي ===
+  // scroll-snap-type: x mandatory يجبر المتصفح على snap scroll عند التحميل،
+  // ومع scroll-behavior: smooth على html، السكرول يتسرّب للصفحة كلها
+  // وينزّلها لقسم التقييمات.
+  // الحل: نعطّل snap أثناء التهيئة ونفعّله بعد ما الصفحة تستقر.
+  track.style.scrollSnapType = "none";
+
   const cards = Array.from(track.children);
   const dotsWrap = document.querySelector("[data-reviews-dots]");
   const prevBtn = document.querySelector("[data-reviews-prev]");
@@ -78,16 +85,11 @@ function initReviewsCarousel() {
 
   function scrollToIndex(i, instant) {
     current = Math.max(0, Math.min(i, cards.length - 1));
-    // نستخدم scrollTo على الـ track مباشرة بدل scrollIntoView —
-    // scrollIntoView يحرّك الصفحة كلها عمودياً لما الكاروسيل يكون جزئياً خارج الشاشة،
-    // وهذا يسبب سكرول تلقائي مزعج بدون تدخل المستخدم.
     const card = cards[current];
     const trackDir = getComputedStyle(track).direction;
     const isRtl = trackDir === "rtl";
-    // حساب موضع البطاقة نسبةً للـ track
     const cardRect = card.getBoundingClientRect();
     const trackRect = track.getBoundingClientRect();
-    // المسافة الأفقية بين بداية البطاقة وبداية الـ track (نسبة للاتجاه الحالي)
     const offset = isRtl
       ? trackRect.right - cardRect.right + track.scrollLeft
       : cardRect.left - trackRect.left + track.scrollLeft;
@@ -120,7 +122,6 @@ function initReviewsCarousel() {
   prevBtn?.addEventListener("click", () => scrollToIndex(current - 1));
   nextBtn?.addEventListener("click", () => scrollToIndex(current + 1));
 
-  // تمرير تلقائي لطيف، يتوقف عند التفاعل ولا يعمل مع تقليل الحركة
   let auto = null;
   function startAuto() {
     if (reduced) return;
@@ -139,11 +140,13 @@ function initReviewsCarousel() {
 
   updateDots();
 
-  // نؤجّل بدء التمرير التلقائي لما المتصفح يستقر — يمنع بق السكرول
-  // التلقائي الذي يسبب نزول الصفحة للتقييمات عند الفتح
-  requestAnimationFrame(() => {
-    setTimeout(startAuto, 500);
-  });
+  // نفعّل scroll-snap ونبدأ التمرير التلقائي بعد ما الصفحة تستقر تماماً
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      track.style.scrollSnapType = "";
+      startAuto();
+    }, 800);
+  }, { once: true });
 }
 
 /* ---------- 4. بيكسل سناب شات ---------- */
@@ -221,7 +224,15 @@ function initFloatingCTA() {
 }
 
 /* ---------- التشغيل ---------- */
+
+// نعطّل scroll-behavior: smooth مؤقتاً أثناء التحميل عشان
+// ما يتسرّب سكرول الكاروسيل للصفحة الرئيسية
+document.documentElement.style.scrollBehavior = "auto";
+
 document.addEventListener("DOMContentLoaded", () => {
+  // نرجّع الصفحة لفوق بشكل فوري قبل أي شي
+  window.scrollTo(0, 0);
+
   syncActionLinks();
   initReveal();
   initReviewsCarousel();
@@ -233,6 +244,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (year) year.textContent = String(new Date().getFullYear());
 });
 
-// تحميل بيكسل سناب بعد اكتمال تحميل الصفحة كي لا يؤثر على سرعتها
-window.addEventListener("load", loadSnapPixel);
+window.addEventListener("load", () => {
+  // نرجّع scroll-behavior: smooth بعد ما كل شي يستقر
+  setTimeout(() => {
+    document.documentElement.style.scrollBehavior = "";
+  }, 1000);
+
+  loadSnapPixel();
+});
 
