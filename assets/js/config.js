@@ -26,7 +26,7 @@ export const BUSINESS = {
   phoneDisplay: "0539344004",
   phoneIntl: "+966539344004", // يُستخدم في tel: و JSON-LD
   whatsapp: "966539344004", // بدون + أو أصفار، للاستخدام في wa.me
-  whatsappMessage: "السلام عليكم، أبغى أطلب من طابونة 🍕",
+  whatsappMessage: "السلام عليكم، أبغى أطلب وأستفيد من عرض الـ 96 ريال 🍕",
 
   address: {
     line: "طريق الأمير سلمان بن محمد بن سعود، حي الصحافة",
