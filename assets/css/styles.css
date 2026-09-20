@@ -1122,37 +1122,37 @@ h3 {
   }
 }
 
-/* ---------- 18. شريط عاجل (News Ticker) ---------- */
+/* ---------- 18. شريط العرض المتحرك (Offer Ticker) ---------- */
 .ticker {
   position: relative;
   z-index: 50;
   display: flex;
   align-items: stretch;
-  background: linear-gradient(95deg, #1a1a1a 0%, #111 100%);
-  border-bottom: 2px solid var(--gold);
+  background: linear-gradient(95deg, #0b140f 0%, #14241b 100%);
+  border-bottom: 1.5px solid rgba(200, 162, 74, 0.45);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+}
+.ticker:hover .ticker__content {
+  animation-play-state: paused;
 }
 .ticker__label {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #c0392b, #e74c3c);
-  color: #fff;
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+  color: var(--on-gold);
   font-family: var(--font-head);
   font-weight: 900;
   font-size: 0.95rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   white-space: nowrap;
   flex-shrink: 0;
   position: relative;
   z-index: 2;
-  box-shadow: 4px 0 12px rgba(0,0,0,0.4);
-  animation: ticker-label-pulse 2s ease-in-out infinite;
-}
-@keyframes ticker-label-pulse {
-  0%, 100% { background: linear-gradient(135deg, #c0392b, #e74c3c); }
-  50% { background: linear-gradient(135deg, #e74c3c, #ff6b6b); }
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.4);
 }
 .ticker__track {
   flex: 1;
@@ -1163,18 +1163,24 @@ h3 {
 .ticker__content {
   display: flex;
   white-space: nowrap;
-  animation: ticker-scroll 25s linear infinite;
+  animation: ticker-scroll 38s linear infinite;
+  will-change: transform;
 }
 .ticker__content span {
   display: inline-block;
   padding: 10px 0;
   font-family: var(--font-head);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.05rem;
   color: var(--gold-soft);
   letter-spacing: 0.01em;
 }
-/* الحركة: من اليمين لليسار — النص يخرج من تحت شارة "عاجل" ويتحرك مبتعداً عنها */
+.ticker__content strong {
+  color: #fff;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(200, 162, 74, 0.3);
+}
+/* الحركة: من اليمين لليسار بسرعة معتدلة ومريحة للقراءة */
 @keyframes ticker-scroll {
   0% {
     transform: translateX(0);
@@ -1187,18 +1193,18 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  width: 42px;
   flex-shrink: 0;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.04);
   border: none;
-  border-right: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-mid);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: background var(--dur-s) var(--ease), color var(--dur-s) var(--ease);
 }
 .ticker__close:hover {
-  background: rgba(255,255,255,0.12);
+  background: rgba(200, 162, 74, 0.2);
   color: var(--text-high);
 }
 
@@ -1209,11 +1215,11 @@ h3 {
 
 @media (max-width: 600px) {
   .ticker__label {
-    padding: 8px 14px;
+    padding: 8px 12px;
     font-size: 0.8rem;
   }
   .ticker__content span {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     padding: 8px 0;
   }
 }
